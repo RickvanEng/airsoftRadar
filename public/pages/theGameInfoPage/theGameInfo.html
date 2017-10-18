@@ -1,0 +1,30 @@
+<div class="var-container">
+    <header-component></header-component>
+
+    <div class="var-content" ng-controller="gameInfoController as infoCtrl">
+
+        <div class="One w70 center">
+            <div class="w20 center">
+                <button type="button" ng-click="infoCtrl.buttonClick('Rules')">Rules</button>
+                <button type="button" ng-click="infoCtrl.buttonClick('Lore')">Lore</button>
+                <a href="#gamePage/loading" ng-click="infoCtrl.enterQue()">Start Game</a>
+            </div>
+
+            <hr>
+
+            <div class="mTop10">
+                <h1>{{infoCtrl.title}}</h1>
+
+                <p>{{infoCtrl.content}}</p>
+
+            </div>
+        </div>
+
+        Select your deck
+
+        <div data-ng-repeat="deck in infoCtrl.playerDecks">
+            <button ng-click="infoCtrl.selectDeck(deck)">{{deck.deckName}}</button>
+        </div>
+
+    </div>
+</div>

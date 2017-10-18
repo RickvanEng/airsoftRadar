@@ -1,0 +1,94 @@
+<div id="SR-main" ng-controller="selectRaceController as raceCtrl">
+    <div id="SR-headerDiv">
+
+        <div id="SR-nextButtonDiv">
+
+            <a>
+                <img src="../../img/next.png"/ style="height: 100%; " ng-click="raceCtrl.checkAndNavigate()"/>
+            </a>
+
+        </div>
+
+        <div id="SR-titleDiv">
+            <form>
+                <input placeholder="Please fill in a deck name" ng-model="raceCtrl.deckName"/>
+                <button ng-click="raceCtrl.setName()">Chose name</button>
+            </form>
+            <p>{{raceCtrl.nameError}}</p>
+        </div>
+    </div>
+
+    <div id="SR-racesWrapper" class="w100">
+        <a ng-repeat="race in raceCtrl.races" id="SR-RaceDiv" type="button" data-ng-click="raceCtrl.selectRace(race)">
+            <div id="SR-RaceTitle">
+                <h2>{{race.race}}</h2>
+            </div>
+            <div id="SR-ImgWrapper">
+                <img src={{raceCtrl.race.imgPath}} />
+                <img src={{race.imgPath}} />
+            </div>
+
+        </a>
+    </div>
+
+    <div id="SR-raceSkills" class="panel panel-darkgrey w80">
+        <div class="panel-heading">
+            <h3 class="panel-title">Race abilities</h3>
+        </div>
+        <div class="panel-body">
+            <div id="SR-raceAbilitiesDiv">
+                <p>Ability 1: {{raceCtrl.raceAbility1}} </p>
+                <p>Ability 2: {{raceCtrl.raceAbility2}} </p>
+                <p>Ability 3: {{raceCtrl.raceAbility3}} </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="SR-line">
+        <hr>
+    </div>
+
+    <div id="SR-raceLore">
+        <div id="SR-loreTitle">
+            <h2> {{raceCtrl.loreTitle}} Lore </h2>
+        </div>
+        <div id="SR-lore">
+            <p>{{raceCtrl.loreContent}}</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // var tooltipSpan1 = document.getElementById('human');
+
+
+    // window.onmousemove = function (e) {
+    //     var x = e.clientX,
+    //         y = e.clientY;
+
+    //     tooltipSpan1.style.top = (y + 20) + 'px';
+    //     tooltipSpan1.style.left = (x + 20) + 'px';
+
+    // };
+
+</script>
+
+<!--
+        <a id="SR-RaceDiv" type="button" data-ng-click="selectRace('exiled')">
+                <div id="SR-RaceTitle"><h2>Exiled</h2> </div>
+                <div id="SR-ImgWrapper"><img src="css/img/raceImg/race-exiled.jpg"/></div>
+                <span id="tooltip-span">
+                    <div id="tooltopDiv"><p>Hier komt alle info van de race enzo</p> </div>
+                </span>
+        </a>
+        
+        <div title="regular tooltip">Hover me</div>
+        <a class="tooltip" href="http://www.google.com/">
+            Google
+            <span id="tooltip-span">
+                <div><p>Hier komt alle info van de race enzo</p> </div>
+            </span>
+        </a>-->

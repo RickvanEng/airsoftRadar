@@ -1,0 +1,26 @@
+<div class="var-container">
+    <div ng-controller="loginController as loginCtrl">
+        <header-component
+            sign-in="loginCtrl.signIn(name, password)"
+            sign-up="loginCtrl.signUp()"
+            sign-out="loginCtrl.signOut()"
+            var="loginCtrl.testVar">
+        </header-component>
+    </div>
+
+    <!--<my-input></my-input>-->
+
+    <img src="../../img/home-bg.jpg" class="headerImage">
+
+    <!--hier komt de content van de page, kan ook in component worden gedaan?-->
+
+    <h1>Card Game</h1>
+
+    <p>content van database, updates, informatie over features, developments, etc</p>
+
+    <!--<a ui-sref=".home1" class="btn btn-primary">List</a>
+        <a ui-sref=".home2" class="btn btn-danger">Paragraph</a>-->
+
+</div>
+
+<div ui-view></div>
