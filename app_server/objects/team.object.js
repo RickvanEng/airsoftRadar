@@ -1,29 +1,35 @@
-// function Group() {
+// function team() {
 //     this.players = 'hallo';
 // }
 
-module.exports.newGroup = function () {
+module.exports.newteam = function () {
 
-    var group = new Object();
+    var team = new Object();
 
-    group.name = 'Agoge';
-    group.id = null;
-    group.players = [];
+    team.name = 'Agoge';
+    team.ID = null;
+    team.players = [];
+    team.inGame = false;
     
 
-    group.addPlayer = function(player) {
+    team.addPlayer = function(player) {
         console.log("add player function");
     }
 
-    group.removePlayer = function(player) {
-        console.log("removes a player from the group");
+    team.removePlayer = function(player) {
+        console.log("removes a player from the team");
     }
     
-    group.getPlayers = function() {
-        console.log("returns all players in group");
+    team.getPlayers = function() {
+        console.log("returns all players in team");
     }
 
-    return group;
+    team.readyCheck = function() {
+        console.log("check if each player in the team is ready");
+        //return true of false;
+    }
+
+    return team;
 };
 
 

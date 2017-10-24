@@ -7,19 +7,114 @@ var path = require('path')
 var io = require('socket.io')(serv, {});
 
 var router = require('./app_server/routes/rest.router');
+var playerClass = require('./app_server/objects/player.object');
+var TeamClass = require('./app_server/objects/Team.object');
 
 app.use('/', router);
 
 serv.listen(4000);
 console.log("server started");
 
-var DEBUG = true;
+
+var connectedPlayers = [];
+
+var connectedTeams = [];
+
+setInterval(function(){
+    updateGame();
+}, 3000);
+
+var updateGame = function() {
+
+    console.log('update gets called');
+}
 
 
 //SOCKETS, this needs a new file
 io.sockets.on('connection', function (socket) {
 
-    console.log('socket ' + socket.id + ' connected');
+    var ID = Math.random();
+    console.log('socket ' + ID + ' connected');
+
+    var player;
+
+    
+
+    socket.on('setName', function(data) {
+        //data = een naam
+        player = playerClass.newPlayer();
+        player.playerID = ID;
+        player.name = data.name;
+        player.socket = socket;
+
+        connectedPlayers.push(player);
+
+        socket.emit('availableTeams', {'teams': connectedTeams})
+    });
+
+    socket.on('createTeam', function(data) {
+        //data = team naam
+        var team = teamClass.newTeam();
+        team.ID = Math.random();
+        team.teamName = data.teamName;
+
+        team.addPlayer(player);
+
+        connectedTeams.push(team);
+
+        socket.emit('availableTeams', {'teams': connectedTeams});
+    });
+
+    socket.on('requestTeams', function() {
+        socket.emit('availableTeams', {'teams': connectedTeams});
+    });
+
+    socket.on('joinTeam', function(data) {
+        //data = teamObject
+        player.joinedTeamID = data.team.TeamID;
+
+        connectedTeams.forEach(function(x) {
+            if(x.ID === data.team.TeamID) {
+                x.addPlayer(player);
+                socket.emit('availableTeams', {'teams': connectedTeams});
+            }
+        });
+    });
+
+    socket.on('playerReady', function() {
+        player.isReady = true;
+
+        //find team waar hij inzit
+        connectedTeams.forEach(function(x) {
+            if(player.teamID === x.TeamID) {
+                if (x.readyCheck()) {
+                    //emit dit alleen naar die group
+                    socket.emit('startGame');
+                } else {
+                    socket.emit('availableTeams', {'teams': connectedTeams});
+                }
+            }
+        });
+
+        //loop to check of iedereen klaar is, zo ja:
+        //socket.emit('startGame');
+
+        //send rdyUpdate terug naar team.
+    });
+
+    socket.on('newCoordinates', function(Coords) {
+        player.coordinates.latitude = Coords.latitude;
+        player.coordinates.longitude = Coords.longitude;
+    });
+
+    socket.emit('updateGame', function() {
+        
+    });
+
+
+
+
+
 
     var player = playerObject.newPlayerObject();
     player.socket = socket;
@@ -138,17 +233,13 @@ io.sockets.on('connection', function (socket) {
 
 });
 
+
 //emit naar alle sockets die er zijn
 //io.sockets.emit('test', {'name': 'bla'});
 
 //Emit naar een specifieke socket
 //Player.list[i].socket.emit('test', {'name': 'bla'});
 
-
 // for (var i in Player.list) {
 //     Player.list[i].socket.emit('test', {'name': 'bla'});
-// }
-
-// function sendData() {
-//     io.broadcast.to('room1').emit('test', { 'name': 'test' });
 // }

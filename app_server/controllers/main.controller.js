@@ -1,5 +1,5 @@
 var path = require('path');
-var group = require('../objects/group.object');
+var team = require('../objects/team.object');
 
 var sendResponse = function (res, status, content) {
     res.status(status);
@@ -7,8 +7,7 @@ var sendResponse = function (res, status, content) {
 }
 
 module.exports.mainReponse = function (req, res) {
-    var group1 = group.newGroup();
-    console.log(group1.name);
-    group1.test();
+    //var team1 = team.newTeam();
+    console.log('yes');
     return sendResponse(res, 200, { "status": "succes", "value": "Yesssss" });
 };
